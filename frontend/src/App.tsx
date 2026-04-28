@@ -4,6 +4,7 @@ import { Layout } from './components/layout/Layout'
 import { Dashboard } from './pages/Dashboard'
 import { Content } from './pages/Content'
 import { Leads } from './pages/Leads'
+import { Proposals } from './pages/Proposals'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -27,7 +28,7 @@ export default function App() {
           <Route element={<Layout />}>
             <Route index element={<Dashboard />} />
             <Route path="/leads" element={<Leads />} />
-            <Route path="/proposals" element={<Placeholder name="Proposals" />} />
+            <Route path="/proposals" element={<Proposals />} />
             <Route path="/content" element={<Content />} />
             <Route path="/websites" element={<Placeholder name="Websites" />} />
             <Route path="/campaigns" element={<Placeholder name="Campaigns" />} />

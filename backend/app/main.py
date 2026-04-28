@@ -7,7 +7,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.core.config import settings
 from app.core.database import create_tables
 from app.core.redis_client import close_redis
-from app.api.routes import dashboard, activity, content, leads
+from app.api.routes import dashboard, activity, content, leads, proposals
 from app.services.scheduler import start_scheduler, stop_scheduler
 
 logging.basicConfig(
@@ -48,6 +48,7 @@ app.include_router(dashboard.router, prefix="/api/v1")
 app.include_router(activity.router, prefix="/api/v1")
 app.include_router(content.router, prefix="/api/v1")
 app.include_router(leads.router, prefix="/api/v1")
+app.include_router(proposals.router, prefix="/api/v1")
 
 
 @app.get("/health")

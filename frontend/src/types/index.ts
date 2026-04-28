@@ -180,6 +180,111 @@ export interface LeadScoreResult {
   suggested_deal_value: number
 }
 
+// ─── Proposals Module ────────────────────────────────────────────────────────
+
+export type ProposalStatus = 'draft' | 'sent' | 'viewed' | 'accepted' | 'rejected' | 'expired'
+
+export type ProposalTemplate =
+  | 'digital_marketing'
+  | 'web_development'
+  | 'seo'
+  | 'social_media'
+  | 'email_marketing'
+  | 'content_creation'
+  | 'full_service'
+  | 'custom'
+
+export interface ProposalSection {
+  heading: string
+  content: string
+}
+
+export interface ProposalMilestone {
+  week: string
+  milestone: string
+}
+
+export interface PricingItem {
+  item: string
+  description: string
+  price: number
+}
+
+export interface Proposal {
+  id: number
+  lead_id: number | null
+  title: string
+  client_name: string
+  client_email: string | null
+  client_company: string | null
+  template_type: ProposalTemplate
+  status: ProposalStatus
+  cover_letter: string | null
+  services: string | null        // JSON string[]
+  sections: string | null        // JSON ProposalSection[]
+  timeline: string | null        // JSON ProposalMilestone[]
+  deliverables: string | null    // JSON string[]
+  pricing_breakdown: string | null  // JSON PricingItem[]
+  value: number
+  monthly_retainer: number
+  setup_fee: number
+  timeline_weeks: number
+  notes: string | null
+  version: number
+  valid_until: string | null
+  ai_generated: boolean
+  ai_win_tips: string | null     // JSON string[]
+  share_token: string
+  file_path: string | null
+  signature_name: string | null
+  signature_date: string | null
+  created_at: string
+  updated_at: string
+  sent_at: string | null
+  viewed_at: string | null
+  accepted_at: string | null
+  rejected_at: string | null
+}
+
+export interface ProposalSummary {
+  id: number
+  title: string
+  client_name: string
+  client_company: string | null
+  status: ProposalStatus
+  template_type: ProposalTemplate
+  value: number
+  ai_generated: boolean
+  created_at: string
+  sent_at: string | null
+  accepted_at: string | null
+}
+
+export interface ProposalStats {
+  total: number
+  by_status: Record<string, number>
+  total_pipeline_value: number
+  won_value: number
+  win_rate: number
+  draft: number
+  sent: number
+  viewed: number
+  accepted: number
+  rejected: number
+}
+
+export interface AIGenerateProposalRequest {
+  lead_id?: number
+  client_name: string
+  client_company?: string
+  client_email?: string
+  template_type: ProposalTemplate
+  services: string[]
+  budget: number
+  timeline_weeks: number
+  notes?: string
+}
+
 // ─── Content Module ──────────────────────────────────────────────────────────
 
 export type ContentType =
