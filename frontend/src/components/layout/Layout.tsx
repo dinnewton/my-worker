@@ -11,6 +11,7 @@ const PAGE_TITLES: Record<string, string> = {
   '/campaigns': 'Campaigns',
   '/email': 'Email',
   '/seo': 'SEO',
+  '/whatsapp': 'WhatsApp',
   '/settings': 'Settings',
 }
 

@@ -12,6 +12,7 @@ import {
   Zap,
   ChevronLeft,
   ChevronRight,
+  MessageCircle,
 } from 'lucide-react'
 import { clsx } from 'clsx'
 import { useState } from 'react'
@@ -25,6 +26,7 @@ const NAV_ITEMS = [
   { to: '/campaigns', icon: BarChart2, label: 'Campaigns' },
   { to: '/email', icon: Mail, label: 'Email' },
   { to: '/seo', icon: Search, label: 'SEO' },
+  { to: '/whatsapp', icon: MessageCircle, label: 'WhatsApp' },
   { to: '/settings', icon: Settings, label: 'Settings' },
 ]
 

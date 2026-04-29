@@ -16,6 +16,13 @@ class Settings(BaseSettings):
     ANTHROPIC_API_KEY: str = ""
     CLAUDE_MODEL: str = "claude-sonnet-4-6"
 
+    # WhatsApp Business (Meta Cloud API)
+    WHATSAPP_PHONE_NUMBER_ID: str = ""
+    WHATSAPP_ACCESS_TOKEN: str = ""
+    WHATSAPP_VERIFY_TOKEN: str = "myworker_wh_verify_2024"
+    WHATSAPP_APP_SECRET: str = ""
+    WHATSAPP_AUTO_REPLY: bool = True
+
     AGENCY_NAME: str = "MyWorker Digital Agency"
     AGENCY_EMAIL: str = "contact@myworker.ai"
     LEAD_SCAN_INTERVAL_MINUTES: int = 30
