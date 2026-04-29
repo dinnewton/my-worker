@@ -5,6 +5,7 @@ import { Dashboard } from './pages/Dashboard'
 import { Content } from './pages/Content'
 import { Leads } from './pages/Leads'
 import { Proposals } from './pages/Proposals'
+import { Websites } from './pages/Websites'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -30,7 +31,7 @@ export default function App() {
             <Route path="/leads" element={<Leads />} />
             <Route path="/proposals" element={<Proposals />} />
             <Route path="/content" element={<Content />} />
-            <Route path="/websites" element={<Placeholder name="Websites" />} />
+            <Route path="/websites" element={<Websites />} />
             <Route path="/campaigns" element={<Placeholder name="Campaigns" />} />
             <Route path="/email" element={<Placeholder name="Email" />} />
             <Route path="/seo" element={<Placeholder name="SEO" />} />

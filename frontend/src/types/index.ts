@@ -285,6 +285,110 @@ export interface AIGenerateProposalRequest {
   notes?: string
 }
 
+// ─── Websites Module ─────────────────────────────────────────────────────────
+
+export type WebsiteStatus = 'planning' | 'in_progress' | 'review' | 'live' | 'maintenance' | 'paused'
+
+export type WebsiteTemplate =
+  | 'business' | 'portfolio' | 'landing_page' | 'ecommerce'
+  | 'blog' | 'restaurant' | 'agency' | 'saas'
+
+export type SectionType =
+  | 'hero' | 'about' | 'services' | 'portfolio' | 'testimonials'
+  | 'pricing' | 'faq' | 'contact' | 'blog' | 'team' | 'cta' | 'stats' | 'custom'
+
+export interface WebsiteSection {
+  type: SectionType
+  heading: string
+  subheading?: string
+  content?: string
+  items?: { title: string; description: string; icon?: string }[]
+  cta_text?: string
+  cta_link?: string
+}
+
+export interface WebsitePage {
+  id: number
+  website_id: number
+  name: string
+  slug: string
+  title: string | null
+  meta_description: string | null
+  sections: string | null   // JSON WebsiteSection[]
+  is_published: boolean
+  order: number
+  created_at: string
+  updated_at: string
+}
+
+export interface Website {
+  id: number
+  lead_id: number | null
+  name: string
+  client_name: string
+  client_email: string | null
+  domain: string | null
+  live_url: string | null
+  template: WebsiteTemplate
+  status: WebsiteStatus
+  industry: string | null
+  description: string | null
+  brand_colors: string | null   // JSON string[]
+  target_audience: string | null
+  key_services: string | null   // JSON string[]
+  notes: string | null
+  progress: number
+  pages_count: number
+  project_value: number
+  monthly_maintenance: number
+  ai_generated: boolean
+  seo_score: number | null
+  deadline: string | null
+  launched_at: string | null
+  created_at: string
+  updated_at: string
+  pages: WebsitePage[]
+}
+
+export interface WebsiteSummary {
+  id: number
+  name: string
+  client_name: string
+  domain: string | null
+  live_url: string | null
+  template: WebsiteTemplate
+  status: WebsiteStatus
+  progress: number
+  pages_count: number
+  project_value: number
+  ai_generated: boolean
+  created_at: string
+  deadline: string | null
+}
+
+export interface WebsiteStats {
+  total: number
+  live: number
+  in_progress: number
+  total_value: number
+  sites_by_template: Record<string, number>
+  sites_by_status: Record<string, number>
+}
+
+export interface AIGenerateSiteRequest {
+  lead_id?: number
+  client_name: string
+  client_email?: string
+  business_name: string
+  industry: string
+  description: string
+  template: WebsiteTemplate
+  target_audience?: string
+  key_services: string[]
+  brand_colors: string[]
+  pages: string[]
+}
+
 // ─── Content Module ──────────────────────────────────────────────────────────
 
 export type ContentType =
