@@ -15,6 +15,7 @@ from app.schemas.proposals import (
     ProposalStatusUpdate, AIGenerateRequest, SignProposalRequest, ProposalSummary,
 )
 from app.services.proposal_service import generate_proposal, get_win_tips, generate_pdf_bytes
+from app.services.invoice_service import send_proposal_email
 
 logger = logging.getLogger(__name__)
 router = APIRouter(prefix="/proposals", tags=["proposals"])
@@ -254,6 +255,31 @@ async def view_shared_proposal(token: str, db: AsyncSession = Depends(get_db)):
         await db.commit()
         await db.refresh(p)
     return p
+
+
+# ─── Email delivery ───────────────────────────────────────────────────────────
+
+@router.post("/{proposal_id}/send-email")
+async def send_email(proposal_id: int, db: AsyncSession = Depends(get_db)):
+    p = await db.get(Proposal, proposal_id)
+    if not p:
+        raise HTTPException(404, "Proposal not found")
+    if not p.client_email:
+        raise HTTPException(400, "Proposal has no client email address")
+
+    share_url = f"{__import__('app.core.config', fromlist=['settings']).settings.ALLOWED_ORIGINS.split(',')[0]}/proposals/share/{p.share_token}"
+    try:
+        pdf_bytes = generate_pdf_bytes(p)
+        ok = await send_proposal_email(p, pdf_bytes, share_url)
+    except Exception as e:
+        raise HTTPException(500, str(e))
+
+    if ok:
+        if p.status == ProposalStatus.DRAFT:
+            p.status = ProposalStatus.SENT
+            p.sent_at = datetime.now(timezone.utc)
+            await db.commit()
+    return {"sent": ok, "share_url": share_url}
 
 
 # ─── E-Signature ──────────────────────────────────────────────────────────────

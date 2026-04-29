@@ -98,7 +98,7 @@ Sections to include (adapt based on service type):
 
 Make it compelling, specific, and professional. Use real numbers and outcomes where possible."""
 
-    response = client.messages.create(
+    response = await client.messages.create(
         model="claude-sonnet-4-6",
         max_tokens=4000,
         system=[{"type": "text", "text": SYSTEM_PROMPT, "cache_control": {"type": "ephemeral"}}],
@@ -126,7 +126,7 @@ Services: {proposal.services}
 
 Return JSON array of 5 strings only: ["tip1", "tip2", "tip3", "tip4", "tip5"]"""
 
-    response = client.messages.create(
+    response = await client.messages.create(
         model="claude-sonnet-4-6",
         max_tokens=500,
         system=[{"type": "text", "text": SYSTEM_PROMPT, "cache_control": {"type": "ephemeral"}}],

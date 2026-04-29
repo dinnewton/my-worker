@@ -16,6 +16,24 @@ class Settings(BaseSettings):
     ANTHROPIC_API_KEY: str = ""
     CLAUDE_MODEL: str = "claude-sonnet-4-6"
 
+    # Stripe
+    STRIPE_SECRET_KEY: str = ""
+    STRIPE_PUBLISHABLE_KEY: str = ""
+    STRIPE_WEBHOOK_SECRET: str = ""
+
+    # M-Pesa (Safaricom Daraja)
+    MPESA_CONSUMER_KEY: str = ""
+    MPESA_CONSUMER_SECRET: str = ""
+    MPESA_SHORTCODE: str = ""
+    MPESA_PASSKEY: str = ""
+    MPESA_CALLBACK_URL: str = ""
+    MPESA_ENV: str = "sandbox"   # sandbox | production
+
+    # Email (SendGrid)
+    SENDGRID_API_KEY: str = ""
+    EMAIL_FROM: str = "noreply@myworker.ai"
+    EMAIL_FROM_NAME: str = "MyWorker Agency"
+
     # WhatsApp Business (Meta Cloud API)
     WHATSAPP_PHONE_NUMBER_ID: str = ""
     WHATSAPP_ACCESS_TOKEN: str = ""
