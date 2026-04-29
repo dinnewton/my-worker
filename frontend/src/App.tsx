@@ -6,6 +6,10 @@ import { Content } from './pages/Content'
 import { Leads } from './pages/Leads'
 import { Proposals } from './pages/Proposals'
 import { Websites } from './pages/Websites'
+import { Email } from './pages/Email'
+import { SEO } from './pages/SEO'
+import { Campaigns } from './pages/Campaigns'
+import { Settings } from './pages/Settings'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -32,10 +36,10 @@ export default function App() {
             <Route path="/proposals" element={<Proposals />} />
             <Route path="/content" element={<Content />} />
             <Route path="/websites" element={<Websites />} />
-            <Route path="/campaigns" element={<Placeholder name="Campaigns" />} />
-            <Route path="/email" element={<Placeholder name="Email" />} />
-            <Route path="/seo" element={<Placeholder name="SEO" />} />
-            <Route path="/settings" element={<Placeholder name="Settings" />} />
+            <Route path="/campaigns" element={<Campaigns />} />
+            <Route path="/email" element={<Email />} />
+            <Route path="/seo" element={<SEO />} />
+            <Route path="/settings" element={<Settings />} />
           </Route>
         </Routes>
       </BrowserRouter>
