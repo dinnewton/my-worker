@@ -13,6 +13,7 @@ import {
   ChevronLeft,
   ChevronRight,
   MessageCircle,
+  Brain,
 } from 'lucide-react'
 import { clsx } from 'clsx'
 import { useState } from 'react'
@@ -27,7 +28,8 @@ const NAV_ITEMS = [
   { to: '/email', icon: Mail, label: 'Email' },
   { to: '/seo', icon: Search, label: 'SEO' },
   { to: '/whatsapp', icon: MessageCircle, label: 'WhatsApp' },
-  { to: '/settings', icon: Settings, label: 'Settings' },
+  { to: '/agent',    icon: Brain,         label: 'Agent Brain' },
+  { to: '/settings', icon: Settings,      label: 'Settings' },
 ]
 
 export function Sidebar() {

@@ -58,6 +58,22 @@ class Settings(BaseSettings):
     POST_SCHEDULE_HOUR: int = 9
     POST_SCHEDULE_MINUTE: int = 0
 
+    # ─── Agent Brain (Module 7) ───────────────────────────────────────────────
+    AGENT_ENABLED: bool = True
+    ADMIN_EMAIL: str = ""           # recipient for daily summary email
+    ADMIN_WHATSAPP: str = ""        # E.164, e.g. +254712345678
+    # IMAP — check inbox for new lead inquiries
+    IMAP_HOST: str = ""
+    IMAP_PORT: int = 993
+    IMAP_USER: str = ""
+    IMAP_PASSWORD: str = ""
+    # Minimum AI lead score to auto-draft a proposal
+    AUTO_PROPOSAL_MIN_SCORE: float = 70.0
+    # Hours between full agent loop runs
+    AGENT_LOOP_INTERVAL_HOURS: int = 1
+    # UTC hour for daily summary (0–23)
+    AGENT_SUMMARY_HOUR: int = 8
+
     @property
     def origins(self) -> list[str]:
         return [o.strip() for o in self.ALLOWED_ORIGINS.split(",")]

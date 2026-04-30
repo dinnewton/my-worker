@@ -230,8 +230,41 @@ def start_scheduler() -> None:
         replace_existing=True,
         misfire_grace_time=300,
     )
+
+    # ── Module 7: AI Agent Brain ──────────────────────────────────────────────
+    scheduler.add_job(
+        _agent_full_loop,
+        trigger=IntervalTrigger(hours=settings.AGENT_LOOP_INTERVAL_HOURS),
+        id="agent_full_loop",
+        replace_existing=True,
+        misfire_grace_time=600,
+    )
+    scheduler.add_job(
+        _agent_daily_summary,
+        trigger=CronTrigger(hour=settings.AGENT_SUMMARY_HOUR, minute=0),
+        id="agent_daily_summary",
+        replace_existing=True,
+        misfire_grace_time=1800,
+    )
+
     scheduler.start()
     logger.info("Scheduler started with all jobs.")
+
+
+async def _agent_full_loop() -> None:
+    from app.services.agent_brain import run_full_agent_loop
+    try:
+        await run_full_agent_loop()
+    except Exception as e:
+        logger.error(f"Agent full loop error: {e}")
+
+
+async def _agent_daily_summary() -> None:
+    from app.services.agent_brain import run_daily_summary
+    try:
+        await run_daily_summary()
+    except Exception as e:
+        logger.error(f"Agent daily summary error: {e}")
 
 
 def stop_scheduler() -> None:
