@@ -12,6 +12,7 @@ import { Campaigns } from './pages/Campaigns'
 import { Settings } from './pages/Settings'
 import { WhatsApp } from './pages/WhatsApp'
 import { AgentBrain } from './pages/AgentBrain'
+import { Invoices } from './pages/Invoices'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -42,6 +43,7 @@ export default function App() {
             <Route path="/email" element={<Email />} />
             <Route path="/seo" element={<SEO />} />
             <Route path="/whatsapp" element={<WhatsApp />} />
+            <Route path="/invoices" element={<Invoices />} />
             <Route path="/agent" element={<AgentBrain />} />
             <Route path="/settings" element={<Settings />} />
           </Route>

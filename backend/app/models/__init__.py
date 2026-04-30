@@ -13,3 +13,4 @@ from app.models.whatsapp import WhatsAppContact, WhatsAppMessage, WhatsAppTempla
 from app.models.kpi import KPISnapshot  # noqa: F401
 from app.models.invoice import Invoice  # noqa: F401
 from app.models.agent import AgentRun, AgentAction  # noqa: F401
+from app.models.settings import AgencySettings, TeamMember  # noqa: F401
