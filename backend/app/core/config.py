@@ -41,6 +41,17 @@ class Settings(BaseSettings):
     WHATSAPP_APP_SECRET: str = ""
     WHATSAPP_AUTO_REPLY: bool = True
 
+    # Netlify
+    NETLIFY_ACCESS_TOKEN: str = ""
+
+    # Vercel
+    VERCEL_ACCESS_TOKEN: str = ""
+
+    # WordPress (global fallback; per-site credentials stored in DB)
+    WP_DEFAULT_URL: str = ""
+    WP_DEFAULT_USER: str = ""
+    WP_DEFAULT_APP_PASSWORD: str = ""
+
     AGENCY_NAME: str = "MyWorker Digital Agency"
     AGENCY_EMAIL: str = "contact@myworker.ai"
     LEAD_SCAN_INTERVAL_MINUTES: int = 30

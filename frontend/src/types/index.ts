@@ -22,36 +22,6 @@ export interface Activity {
   created_at: string
 }
 
-export type LeadStatus = 'new' | 'contacted' | 'qualified' | 'proposal_sent' | 'won' | 'lost'
-export type LeadSource = 'web_scrape' | 'referral' | 'social_media' | 'email_campaign' | 'manual'
-
-export interface Lead {
-  id: number
-  name: string
-  company: string | null
-  email: string | null
-  industry: string | null
-  status: LeadStatus
-  source: LeadSource
-  score: number
-  ai_summary: string | null
-  created_at: string
-}
-
-export type ProposalStatus = 'draft' | 'sent' | 'viewed' | 'accepted' | 'rejected'
-
-export interface Proposal {
-  id: number
-  title: string
-  client_name: string
-  client_email: string | null
-  status: ProposalStatus
-  services: string | null
-  value: number
-  ai_generated: boolean
-  created_at: string
-  sent_at: string | null
-}
 
 export interface KPIData {
   active_leads: number
@@ -329,13 +299,14 @@ export interface Website {
   client_email: string | null
   domain: string | null
   live_url: string | null
+  share_token: string
   template: WebsiteTemplate
   status: WebsiteStatus
   industry: string | null
   description: string | null
-  brand_colors: string | null   // JSON string[]
+  brand_colors: string | null
   target_audience: string | null
-  key_services: string | null   // JSON string[]
+  key_services: string | null
   notes: string | null
   progress: number
   pages_count: number
@@ -343,6 +314,15 @@ export interface Website {
   monthly_maintenance: number
   ai_generated: boolean
   seo_score: number | null
+  requirements_sent: boolean
+  requirements_submitted: boolean
+  deploy_platform: string | null
+  netlify_site_id: string | null
+  netlify_deploy_url: string | null
+  vercel_project_id: string | null
+  vercel_deploy_url: string | null
+  wp_site_url: string | null
+  last_deployed_at: string | null
   deadline: string | null
   launched_at: string | null
   created_at: string
@@ -356,6 +336,7 @@ export interface WebsiteSummary {
   client_name: string
   domain: string | null
   live_url: string | null
+  share_token: string
   template: WebsiteTemplate
   status: WebsiteStatus
   progress: number
@@ -364,6 +345,10 @@ export interface WebsiteSummary {
   ai_generated: boolean
   created_at: string
   deadline: string | null
+  netlify_deploy_url: string | null
+  vercel_deploy_url: string | null
+  deploy_platform: string | null
+  last_deployed_at: string | null
 }
 
 export interface WebsiteStats {

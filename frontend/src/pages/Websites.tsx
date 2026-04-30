@@ -1,10 +1,11 @@
 import { useState } from 'react'
-import { Plus, Zap, Globe, BarChart2, Loader2, Search, TrendingUp } from 'lucide-react'
+import { Plus, Zap, Globe, BarChart2, Loader2, Search, TrendingUp, Calculator, X } from 'lucide-react'
 import { clsx } from 'clsx'
 import { useWebsites, useWebsiteStats } from '../hooks/useWebsites'
 import { WebsiteCard } from '../components/websites/WebsiteCard'
 import { WebsiteEditor } from '../components/websites/WebsiteEditor'
 import { AIGenerateSiteModal } from '../components/websites/AIGenerateSiteModal'
+import { PricingCalculator } from '../components/websites/PricingCalculator'
 import type { WebsiteStatus, Website } from '../types'
 
 const STATUS_FILTERS: { value: WebsiteStatus | 'all'; label: string }[] = [
@@ -17,7 +18,7 @@ const STATUS_FILTERS: { value: WebsiteStatus | 'all'; label: string }[] = [
 ]
 
 function StatCard({ label, value, icon: Icon, color, bg }: {
-  label: string; value: string | number; icon: React.ElementType; color: string; bg: string
+  label: string; value: string | number; icon: typeof Globe; color: string; bg: string
 }) {
   return (
     <div className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 px-5 py-4 flex items-center gap-4">
@@ -37,6 +38,7 @@ export function Websites() {
   const [search, setSearch] = useState('')
   const [selectedId, setSelectedId] = useState<number | null>(null)
   const [showGenerate, setShowGenerate] = useState(false)
+  const [showCalculator, setShowCalculator] = useState(false)
 
   const { data: sites = [], isLoading } = useWebsites(statusFilter !== 'all' ? statusFilter : undefined)
   const { data: stats } = useWebsiteStats()
@@ -54,15 +56,38 @@ export function Websites() {
         <div>
           <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Website Builder</h1>
           <p className="text-sm text-gray-500 dark:text-gray-400 mt-0.5">
-            AI-generated client websites with full copy, SEO and page management
+            AI-generated client websites with content, SEO, deployment, and revision tracking
           </p>
         </div>
-        <button
-          onClick={() => setShowGenerate(true)}
-          className="flex items-center gap-2 px-4 py-2.5 bg-brand-600 hover:bg-brand-700 text-white text-sm font-medium rounded-xl transition-colors shadow-sm">
-          <Zap className="w-4 h-4" /> AI Generate Site
-        </button>
+        <div className="flex items-center gap-2">
+          <button
+            onClick={() => setShowCalculator(v => !v)}
+            className={clsx(
+              'flex items-center gap-2 px-4 py-2.5 text-sm font-medium rounded-xl transition-colors border',
+              showCalculator
+                ? 'bg-brand-600 text-white border-brand-600'
+                : 'border-gray-200 dark:border-gray-600 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700',
+            )}>
+            <Calculator className="w-4 h-4" /> Pricing
+          </button>
+          <button
+            onClick={() => setShowGenerate(true)}
+            className="flex items-center gap-2 px-4 py-2.5 bg-brand-600 hover:bg-brand-700 text-white text-sm font-medium rounded-xl transition-colors shadow-sm">
+            <Zap className="w-4 h-4" /> AI Generate Site
+          </button>
+        </div>
       </div>
+
+      {/* Pricing Calculator (inline collapse) */}
+      {showCalculator && (
+        <div className="relative">
+          <button onClick={() => setShowCalculator(false)}
+            className="absolute top-3 right-3 z-10 p-1.5 text-gray-400 hover:text-gray-600 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">
+            <X className="w-4 h-4" />
+          </button>
+          <PricingCalculator />
+        </div>
+      )}
 
       {/* Stats */}
       {stats && (
@@ -129,7 +154,7 @@ export function Websites() {
       {showGenerate && (
         <AIGenerateSiteModal
           onClose={() => setShowGenerate(false)}
-          onSuccess={(site) => setSelectedId(site.id)}
+          onSuccess={(site: Website) => setSelectedId(site.id)}
         />
       )}
     </div>

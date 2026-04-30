@@ -1,6 +1,6 @@
 from datetime import datetime
 from pydantic import BaseModel
-from app.models.website import WebsiteStatus, WebsiteTemplate, SectionType
+from app.models.website import WebsiteStatus, WebsiteTemplate, SectionType, RevisionStatus, RevisionPriority
 
 
 class WebsitePageOut(BaseModel):
@@ -46,6 +46,7 @@ class WebsiteOut(BaseModel):
     client_email: str | None
     domain: str | None
     live_url: str | None
+    share_token: str
     template: WebsiteTemplate
     status: WebsiteStatus
     industry: str | None
@@ -60,6 +61,15 @@ class WebsiteOut(BaseModel):
     monthly_maintenance: float
     ai_generated: bool
     seo_score: int | None
+    requirements_sent: bool
+    requirements_submitted: bool
+    deploy_platform: str | None
+    netlify_site_id: str | None
+    netlify_deploy_url: str | None
+    vercel_project_id: str | None
+    vercel_deploy_url: str | None
+    wp_site_url: str | None
+    last_deployed_at: datetime | None
     deadline: datetime | None
     launched_at: datetime | None
     created_at: datetime
@@ -74,6 +84,7 @@ class WebsiteSummary(BaseModel):
     client_name: str
     domain: str | None
     live_url: str | None
+    share_token: str
     template: WebsiteTemplate
     status: WebsiteStatus
     progress: int
@@ -82,6 +93,10 @@ class WebsiteSummary(BaseModel):
     ai_generated: bool
     created_at: datetime
     deadline: datetime | None
+    netlify_deploy_url: str | None
+    vercel_deploy_url: str | None
+    deploy_platform: str | None
+    last_deployed_at: datetime | None
 
 
 class WebsiteCreate(BaseModel):
@@ -120,8 +135,10 @@ class WebsiteUpdate(BaseModel):
     project_value: float | None = None
     monthly_maintenance: float | None = None
     deadline: datetime | None = None
-    live_url: str | None = None
     seo_score: int | None = None
+    wp_site_url: str | None = None
+    wp_username: str | None = None
+    wp_app_password: str | None = None
 
 
 class AIGenerateSiteRequest(BaseModel):
@@ -152,3 +169,87 @@ class WebsiteStats(BaseModel):
     total_value: float
     sites_by_template: dict
     sites_by_status: dict
+
+
+# ─── Requirements ─────────────────────────────────────────────────────────────
+
+class RequirementsOut(BaseModel):
+    model_config = {"from_attributes": True}
+    id: int
+    website_id: int
+    intake_token: str
+    client_name: str | None
+    client_email: str | None
+    business_name: str | None
+    target_audience: str | None
+    design_style: str | None
+    color_preferences: str | None
+    competitor_urls: str | None
+    reference_sites: str | None
+    must_have_features: str | None
+    pages_needed: str | None
+    content_ready: bool
+    logo_ready: bool
+    images_ready: bool
+    deadline_notes: str | None
+    special_requests: str | None
+    submitted_at: datetime | None
+    created_at: datetime
+
+
+class RequirementsSubmit(BaseModel):
+    client_name: str | None = None
+    client_email: str | None = None
+    business_name: str | None = None
+    target_audience: str | None = None
+    design_style: str | None = None
+    color_preferences: str | None = None
+    competitor_urls: str | None = None
+    reference_sites: str | None = None
+    must_have_features: str | None = None
+    pages_needed: str | None = None
+    content_ready: bool = False
+    logo_ready: bool = False
+    images_ready: bool = False
+    deadline_notes: str | None = None
+    special_requests: str | None = None
+
+
+# ─── Revisions ────────────────────────────────────────────────────────────────
+
+class RevisionOut(BaseModel):
+    model_config = {"from_attributes": True}
+    id: int
+    website_id: int
+    requested_by: str | None
+    page_name: str | None
+    section_type: str | None
+    description: str
+    status: RevisionStatus
+    priority: RevisionPriority
+    agency_notes: str | None
+    created_at: datetime
+    updated_at: datetime
+
+
+class RevisionCreate(BaseModel):
+    requested_by: str | None = None
+    page_name: str | None = None
+    section_type: str | None = None
+    description: str
+    priority: RevisionPriority = RevisionPriority.MEDIUM
+
+
+class RevisionUpdate(BaseModel):
+    status: RevisionStatus | None = None
+    agency_notes: str | None = None
+    priority: RevisionPriority | None = None
+
+
+# ─── Deploy ───────────────────────────────────────────────────────────────────
+
+class DeployRequest(BaseModel):
+    platform: str  # netlify | vercel | wordpress
+    wp_url: str | None = None
+    wp_username: str | None = None
+    wp_app_password: str | None = None
